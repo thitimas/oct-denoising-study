@@ -1,0 +1,71 @@
+{
+  "run_name": "oct_inceptionv3_v2.1",
+  "quick_test": false,
+  "environment": {
+    "python": "3.9.23",
+    "tensorflow": "2.10.1",
+    "keras": "2.10.0",
+    "numpy": "1.23.5",
+    "pillow": "8.2.0",
+    "gpus": 0
+  },
+  "seed": 42,
+  "data_root": "./DataSet/CellData/OCT",
+  "image_size": 224,
+  "batch_size": 32,
+  "preprocessing": "PIL open -> RGB -> resize (PIL default) -> inception_v3.preprocess_input (identical to Util.importimage/oct_predict)",
+  "classes": [
+    "CNV",
+    "DME",
+    "DRUSEN",
+    "NORMAL"
+  ],
+  "train_test_patient_overlap": 0,
+  "validation": "patient-wise GroupShuffleSplit, 10% of training patients (split seed 42)",
+  "balance": "undersample",
+  "class_weights": null,
+  "images_used": {
+    "train": 30788,
+    "val": 3572,
+    "test": 1000
+  },
+  "train_class_counts": {
+    "CNV": 7697,
+    "DME": 7697,
+    "DRUSEN": 7697,
+    "NORMAL": 7697
+  },
+  "val_class_counts": {
+    "CNV": 893,
+    "DME": 893,
+    "DRUSEN": 893,
+    "NORMAL": 893
+  },
+  "val_patients_held_out": 479,
+  "val_patients_after_balancing": 434,
+  "stage1": {
+    "epochs_run": 5,
+    "learning_rate": 0.001
+  },
+  "stage2": {
+    "epochs_run": 8,
+    "learning_rate": 1e-05,
+    "unfrozen_from": "mixed8"
+  },
+  "max_epochs": 50,
+  "early_stopping_patience": 5,
+  "augmentation": true,
+  "best_epoch": 8,
+  "best_val_loss": 0.4280487895011902,
+  "validation_accuracy": 0.8507838745800672,
+  "test_accuracy": 0.938,
+  "test_per_class_recall": {
+    "CNV": 0.964,
+    "DME": 0.996,
+    "DRUSEN": 0.904,
+    "NORMAL": 0.888
+  },
+  "model_path": "./Models/oct_inceptionv3_v2.1.keras",
+  "model_sha256": "857dc5e3fc6fdd6c5b5773bdd021965ca5df60d9a46385223dc198bc9f2c3a5f",
+  "training_minutes": 60.9
+}
